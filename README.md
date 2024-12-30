@@ -7,8 +7,8 @@ sus dueños. La idea es hacerlo cada vez mas robusto con muchas funcionalidades.
 
 TODO List
 
-- [ ] Crear una DB para mascotas.
-- [ ] Crear una DB para dueños.
+- [x] Crear una DB para mascotas.
+- [x] Crear una DB para dueños.
 - [ ] Diseñar clases de mascotas.
 - [ ] Diseñar clases de dueños.
 - [ ] Integrar DB con el programa.
@@ -30,13 +30,18 @@ Table OWNERS {
   dni varchar(9) [unique, not null]
   phone varchar(15)
   email varchar(50) [unique]
+  address VARCHAR(255)
 }
 
 Table PETS {
   id int [primary key]
   name varchar(50) [not null]
   colour varchar(50)
-  sexo enum('M', 'F') [not null]
+  breed varchar(50)
+  sex enum('M', 'F') [not null]
+  birth_date date
+  type varchar[50] [not null]
+  microchip_id varchar[20] [unique]
 }
 
 Table OWNER_PET {
