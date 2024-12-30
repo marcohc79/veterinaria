@@ -1,0 +1,50 @@
+# Archivos y directorios generales
+.DS_Store
+Thumbs.db
+*.log
+*.tmp
+*.bak
+
+# IntelliJ IDEA
+.idea/
+*.iws
+*.iml
+*.ipr
+
+# Maven
+/target/
+/out/
+!.mvn/wrapper/maven-wrapper.jar
+.mvn/
+
+# Spring Tool Suite (STS)
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+# NetBeans
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+# Visual Studio Code
+.vscode/
+
+# Ignorar archivos específicos del proyecto
+HELP.md
+
+# Ignorar configuraciones sensibles (si aplica)
+src/main/resources/application.properties
+
+# Inclusiones específicas (si necesitas excepciones)
+!app/j_veterinary/src/main/**/target/
+!app/j_veterinary/src/test/**/target/
