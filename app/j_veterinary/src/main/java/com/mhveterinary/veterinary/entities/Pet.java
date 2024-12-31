@@ -2,8 +2,10 @@ package com.mhveterinary.veterinary.entities;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import org.hibernate.mapping.Set;
 
 import java.time.LocalDate;
+import java.util.HashSet;
 
 @Entity
 @Data
@@ -34,6 +36,9 @@ public class Pet {
 
     @Column(name = "microchip_id", unique = true, length = 20 )
     private String microchip_id;
+
+    @ManyToMany(mappedBy = "pets")
+    private Set<Owner>  owners = new HashSet<>();
 
     public enum Sex{
         M,F
