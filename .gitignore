@@ -10,6 +10,8 @@ Thumbs.db
 *.iws
 *.iml
 *.ipr
+.idea
+
 
 # Maven
 /target/
@@ -43,7 +45,7 @@ build/
 HELP.md
 
 # Ignorar configuraciones sensibles (si aplica)
-src/main/resources/application.properties
+app/j_veterinary/.env
 
 # Inclusiones específicas (si necesitas excepciones)
 !app/j_veterinary/src/main/**/target/
