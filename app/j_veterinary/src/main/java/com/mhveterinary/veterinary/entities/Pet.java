@@ -2,7 +2,7 @@ package com.mhveterinary.veterinary.entities;
 
 import jakarta.persistence.*;
 import lombok.Data;
-import org.hibernate.mapping.Set;
+import java.util.Set;
 
 import java.time.LocalDate;
 import java.util.HashSet;
@@ -38,7 +38,7 @@ public class Pet {
     private String microchip_id;
 
     @ManyToMany(mappedBy = "pets")
-    private Set<Owner>  owners = new HashSet<>();
+    private Set<Owner> owners = new HashSet<>();
 
     public enum Sex{
         M,F
