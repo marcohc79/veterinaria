@@ -1,52 +1,119 @@
 @startuml
-
 hide circle
 
+'--------------- Estilos y Definiciones ---------------
 !define primary_key(x) <b><color:#b8861b><&key></color> x</b>
 !define foreign_key(x) <color:#aaaaaa><&key></color> x
 !define column(x) <color:#efefef><&media-record></color> x
-!define table(x) entity x << (T, white) >>
+!define sql_table(x) entity x << (T,#ADD8E6) >> <<SQL>>
+!define mongo_collection(x) entity x << (D,#90EE90) >> <<MongoDB>>
 
-table(owners) {
-        primary_key(owner_id): UUID <<PK>>
-        --
-        column(name): VARCHAR(100) NOT NULL
-        column(phone): VARCHAR(20) NOT NULL
-        column(email): VARCHAR(100) NOT NULL, UNIQUE
-        column(address): VARCHAR(200) NOT NULL
-    }
+'--------------- Entidades SQL ---------------
+sql_table(owners) {
+    primary_key(owner_id): UUID <<PK>>
+    --
+    column(name): VARCHAR(100) NOT NULL
+    column(phone): VARCHAR(20) NOT NULL
+    column(email): VARCHAR(100) NOT NULL, UNIQUE
+    column(address): VARCHAR(200) NOT NULL
+}
 
-table(pets) {
-        primary_key(pet_id): UUID <<PK>>
-        foreign_key(species_id)
-        foreign_key(breed_id)
-        foreign_key(owner_id)
-        --
-        column(name): VARCHAR(50) NOT NULL
-        column(birth_date): DATE NOT NULL
-    }
+sql_table(pets) {
+    primary_key(pet_id): UUID <<PK>>
+    foreign_key(species_id)
+    foreign_key(breed_id)
+    foreign_key(owner_id)
+    --
+    column(name): VARCHAR(50) NOT NULL
+    column(birth_date): DATE NOT NULL
+}
 
-
-table(appointments) {
+sql_table(appointments) {
     primary_key(appointment_id): UUID <<PK>>
     foreign_key(pet_id)
     foreign_key(vet_id)
     --
     column(date_time): TIMESTAMP NOT NULL
     column(reason): VARCHAR(200) NOT NULL
+    column(status): ENUM('scheduled', 'completed', 'cancelled')
     column(cost): DECIMAL(10,2) NOT NULL
-    }
+}
 
-table(invoices) {
+sql_table(invoices) {
     primary_key(invoice_id): UUID <<PK>>
     foreign_key(appointment_id)
+    foreign_key(payment_method_id)
     --
     column(issue_date): DATE NOT NULL
     column(total): DECIMAL(10,2) NOT NULL
-    column(payment_method): ENUM('cash', 'credit_card', 'debit_card', 'bank_transfer')
-    }
+}
 
+sql_table(veterinarians) {
+    primary_key(vet_id): UUID <<PK>>
+    --
+    column(name): VARCHAR(100) NOT NULL
+    column(specialty): VARCHAR(100) NOT NULL
+}
+
+sql_table(species) {
+    primary_key(species_id): UUID <<PK>>
+    --
+    column(name): VARCHAR(50) NOT NULL
+    column(description): TEXT
+}
+
+sql_table(breeds) {
+    primary_key(breed_id): UUID <<PK>>
+    foreign_key(species_id)
+    --
+    column(name): VARCHAR(50) NOT NULL
+}
+
+sql_table(payment_methods) {
+    primary_key(payment_method_id): UUID <<PK>>
+    --
+    column(name): VARCHAR(20) NOT NULL
+}
+
+'--------------- Colecciones MongoDB ---------------
+mongo_collection(medical_records) {
+    column(_id): ObjectId <<PK>>
+    --
+    column(pet_id): UUID <<FK to SQL>>
+    column(vet_id): UUID <<FK to SQL>>
+    column(visits): ARRAY<DOCUMENT>
+    column(attachments): ARRAY<STRING>
+}
+
+mongo_collection(activity_logs) {
+    column(_id): ObjectId <<PK>>
+    --
+    column(user_id): UUID <<FK to SQL>>
+    column(action): STRING
+    column(details): DOCUMENT
+    column(timestamp): DATE
+}
+
+mongo_collection(breed_details) {
+    column(_id): ObjectId <<PK>>
+    --
+    column(breed_id): UUID <<FK to SQL>>
+    column(traits): DOCUMENT
+    column(popularity): INT
+}
+
+'--------------- Relaciones SQL ---------------
 owners ||--o{ pets
 pets ||--o{ appointments
+veterinarians ||--o{ appointments
 appointments ||--|| invoices
+species ||--o{ breeds
+breeds }o--|| pets
+payment_methods ||--o{ invoices
+
+'--------------- Relaciones SQL-MongoDB ---------------
+pets }..-|| medical_records : "Referencia"
+breeds }..-|| breed_details : "Extensión"
+appointments }..-|| activity_logs : "Registro"
+
 @enduml
