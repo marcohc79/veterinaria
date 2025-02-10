@@ -50,3 +50,9 @@ app/j_veterinary/.env
 # Inclusiones específicas (si necesitas excepciones)
 !app/j_veterinary/src/main/**/target/
 !app/j_veterinary/src/test/**/target/
+
+# Excluir archivos de configuración sensibles
+app/veterinary/src/main/resources/application.properties
+app/veterinary/src/main/resources/*.yml
+app/veterinary/src/main/resources/*.yaml
+
