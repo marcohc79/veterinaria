@@ -13,6 +13,7 @@ sql_table(owners) {
     primary_key(owner_id): UUID <<PK>>
     --
     column(name): VARCHAR(100) NOT NULL
+    column(surname): VARCHAR(100) NOT NULL
     column(phone): VARCHAR(20) NOT NULL
     column(email): VARCHAR(100) NOT NULL, UNIQUE
     column(address): VARCHAR(200) NOT NULL

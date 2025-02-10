@@ -1,0 +1,17 @@
+### POST save pet
+POST http://localhost:8080/api/pet
+Content-Type: application/json
+
+{
+  "name": "Angel",
+  "birthDate": "2024-02-28",
+  "breed": {
+    "name": "Bombay",
+    "species": {
+      "name": "Gato"
+    }
+  },
+  "owner": {
+    "email": "email66@example.com"
+  }
+}

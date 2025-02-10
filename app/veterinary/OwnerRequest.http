@@ -1,0 +1,28 @@
+### POST save owner
+POST http://localhost:8080/api/save
+Content-Type: application/json
+
+{
+  "name": "Name",
+  "surname": "Surname",
+  "email": "prueba346@prueba.com",
+  "address": "Your home",
+  "phone": "1112456789"
+}
+
+### GET all owners
+GET http://localhost:8080/api/owners
+
+### GET owner by id
+GET http://localhost:8080/api/owner/3
+
+### DELETE owner by id
+DELETE http://localhost:8080/api/owner/2
+
+### PATCH update owner
+PATCH http://localhost:8080/api/owner/3
+Content-Type: application/json
+
+{
+  "address": "655 Main St, City1"
+}
